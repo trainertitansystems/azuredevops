@@ -1,0 +1,25 @@
+# Login to Azure
+az login
+
+# Set default subscription (optional)
+az account set --subscription "<subscription-id>"
+
+# Create resource group
+az group create \
+  --name devops-training-rg \
+  --location eastus
+
+# Create VM
+az vm create \
+  --resource-group devops-training-rg \
+  --name devops-vm \
+  --image UbuntuLTS \
+  --admin-username azureuser \
+  --authentication-type ssh \
+  --ssh-key-value ~/.ssh/id_rsa.pub
+
+# Open port 80 for HTTP
+az vm open-port \
+  --resource-group devops-training-rg \
+  --name devops-vm \
+  --port 80
