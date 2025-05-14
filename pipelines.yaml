@@ -1,0 +1,21 @@
+trigger:
+  - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+- stage: Deploy
+  jobs:
+  - job: DeployNginx
+    steps:
+    - task: SSH@0
+      inputs:
+        sshEndpoint: 'MyLinuxVM'  # This must be created in DevOps project settings
+        runOptions: 'inline'
+        inline: |
+          #!/bin/bash
+          sudo apt update -y
+          sudo apt install nginx -y
+          echo "Welcome to Azure DevOps - Titan Systems" | sudo tee /var/www/html/index.html
+        failOnStdErr: true
